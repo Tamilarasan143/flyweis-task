@@ -8,8 +8,9 @@ import { customTableHeaderStyles } from "../_components/tableheaderstyle";
 import { AutoDealershipEntry } from "@/models/auto-dealership";
 import DataTable from "react-data-table-component";
 import { ImagePlaceholder } from "../_components/image-placeholder";
+import { TableRowEditDelete } from "../_components/table-row-edit-delete";
 export const AutoDealershipIndex = () => {
-  const { autoDealerShips, autoDealerShipsIsLoading } = useAutoDealerShip();
+  const { autoDealerShips, autoDealerShipsIsLoading ,deleteAutoDealerShip,isDeleteAutoDealerShipLoading} = useAutoDealerShip();
   // const [article, setArticle] = React.useState(null);
 
   // React.useEffect(() => {
@@ -18,6 +19,13 @@ export const AutoDealershipIndex = () => {
   //         .then(data => setArticle(data))
   //         .catch(err => console.error("error", err));
   // }, []);
+  const handleEdit = (id: AutoDealershipEntry[`_id`]) => {
+    console.log("id", id);
+  };
+  const handleDelete = () => {
+    
+    deleteAutoDealerShip()
+  };
   const columns = [
     {
       name: `Image`,
@@ -41,7 +49,11 @@ export const AutoDealershipIndex = () => {
     {
       name: `Operations`,
       selector: (row: AutoDealershipEntry) => (
-        <Typography variant="body2">{row._id}</Typography>
+        <TableRowEditDelete
+          onEdit={() => handleEdit(row._id)}
+          onDelete={() => handleDelete()}
+          isDisableDelete={isDeleteAutoDealerShipLoading}
+        />
       ),
     },
   ];

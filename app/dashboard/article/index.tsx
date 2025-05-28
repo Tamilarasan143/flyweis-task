@@ -8,9 +8,10 @@ import { Article } from "@/models/article";
 import Image from "next/image";
 import { customTableHeaderStyles } from "../_components/tableheaderstyle";
 import { ImagePlaceholder } from "../_components/image-placeholder";
+import { TableRowEditDelete } from "../_components/table-row-edit-delete";
 
 export const ArticleIndex = () => {
-  const { articles, articlesIsLoading } = useArticle();
+  const { articles, articlesIsLoading ,deleteArticle,isDeleteArticleLoading} = useArticle();
   // const [article, setArticle] = React.useState(null);
 
   // React.useEffect(() => {
@@ -19,6 +20,13 @@ export const ArticleIndex = () => {
   //         .then(data => setArticle(data))
   //         .catch(err => console.error("error", err));
   // }, []);
+  const handleEdit = (id: Article[`_id`]) => {
+    console.log("id", id);
+  };
+  const handleDelete = (id: Article[`_id`]) => {
+    
+    deleteArticle(id)
+  };
   const columns = [
     {
       name: `Image`,
@@ -52,7 +60,11 @@ export const ArticleIndex = () => {
     {
       name: `Operations`,
       selector: (row: Article) => (
-        <Typography variant="body2">{row._id}</Typography>
+        <TableRowEditDelete
+          onEdit={() => handleEdit(row._id)}
+          isDisableDelete={isDeleteArticleLoading}
+          onDelete={() => handleDelete(row._id)}
+        />
       ),
     },
   ];

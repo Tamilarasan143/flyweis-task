@@ -8,9 +8,10 @@ import Image from "next/image";
 import { customTableHeaderStyles } from "../_components/tableheaderstyle";
 import { ImagePlaceholder } from "../_components/image-placeholder";
 import DataTable from "react-data-table-component";
+import { TableRowEditDelete } from "../_components/table-row-edit-delete";
 
 export const UserManagementIndex = () => {
-  const { userManagements, userManagementsIsLoading } = useUserManagement();
+  const { userManagements, userManagementsIsLoading ,deleteUser,isDeleteUserLoading} = useUserManagement();
   // const [faq, setFaqs] = React.useState(null);
 
   // React.useEffect(() => {
@@ -19,6 +20,12 @@ export const UserManagementIndex = () => {
   //     .then(data => setFaqs(data))
   //     .catch(err => console.error("error", err));
   // }, [faq]);
+  const handleEdit = (id: UserItem[`_id`]) => {
+    console.log("id", id);
+  };
+  const handleDelete = (id: UserItem[`_id`]) => {
+    deleteUser(id)
+  };
   const columns = [
     {
       name: `Image`,
@@ -40,7 +47,7 @@ export const UserManagementIndex = () => {
       name: `Name`,
       selector: (row: UserItem) => (
         <Typography variant="body2">
-          { row.fullName ?? (row.firstName + " " + row.lastName)}
+          {row.fullName ?? row.firstName + " " + row.lastName}
         </Typography>
       ),
     },
@@ -62,13 +69,19 @@ export const UserManagementIndex = () => {
       name: `Location`,
       wrap: true,
       selector: (row: UserItem) => (
-        <Typography variant="body2">{row.state ?? row.country ?? row.location}</Typography>
+        <Typography variant="body2">
+          {row.state ?? row.country ?? row.location}
+        </Typography>
       ),
     },
     {
       name: `Operations`,
       selector: (row: UserItem) => (
-        <Typography variant="body2">{row._id}</Typography>
+        <TableRowEditDelete
+          onEdit={() => handleEdit(row._id)}
+          onDelete={() => handleDelete(row._id)}
+          isDisableDelete={isDeleteUserLoading}
+        />
       ),
     },
   ];
@@ -77,7 +90,7 @@ export const UserManagementIndex = () => {
   return (
     <Box>
       <Header title="User Management" />
-       <Paper variant="outlined" sx={{ pb: 0.5 }}>
+      <Paper variant="outlined" sx={{ pb: 0.5 }}>
         <DataTable
           columns={columns}
           data={userManagements?.data.docs ?? []}

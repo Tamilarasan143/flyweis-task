@@ -6,9 +6,10 @@ import { Header } from "../_components/header";
 import { FAQItem } from "@/models/faq";
 import DataTable from "react-data-table-component";
 import { customTableHeaderStyles } from "../_components/tableheaderstyle";
+import { TableRowEditDelete } from "../_components/table-row-edit-delete";
 
 export const FaqIndex = () => {
-  const { faqs, faqIsLoading } = useFaqs();
+  const { faqs, faqIsLoading , deleteFAQ , isDeleteFAQLoading } = useFaqs();
   // const [faq, setFaqs] = React.useState(null);
 
   // React.useEffect(() => {
@@ -17,6 +18,12 @@ export const FaqIndex = () => {
   //     .then(data => setFaqs(data))
   //     .catch(err => console.error("error", err));
   // }, [faq]);
+  const handleEdit = (id: FAQItem[`_id`]) => {
+    console.log("id", id);
+  };
+  const handleDelete = (id: FAQItem[`_id`]) => {
+    deleteFAQ(id)
+  };
   const columns = [
     {
       name: `Question`,
@@ -34,7 +41,11 @@ export const FaqIndex = () => {
     {
       name: `Operations`,
       selector: (row: FAQItem) => (
-        <Typography variant="body2">{row._id}</Typography>
+        <TableRowEditDelete
+          onEdit={() => handleEdit(row._id)}
+          onDelete={() => handleDelete(row._id)}
+          isDisableEdit={isDeleteFAQLoading}
+        />
       ),
     },
   ];

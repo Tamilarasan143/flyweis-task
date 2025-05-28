@@ -1,14 +1,15 @@
-"use client"
-import { Box, Paper, Typography } from '@mui/material';
-import React from 'react'
-import { Header } from '../_components/header';
-import { usePrivacyAndTerms } from '@/hooks/use-privacy-terms';
-import { TermsData } from '@/models/privacy-terms';
-import DataTable from 'react-data-table-component';
-import { customTableHeaderStyles } from '../_components/tableheaderstyle';
+"use client";
+import { Box, Paper, Typography } from "@mui/material";
+import React from "react";
+import { Header } from "../_components/header";
+import { usePrivacyAndTerms } from "@/hooks/use-privacy-terms";
+import { TermsData } from "@/models/privacy-terms";
+import DataTable from "react-data-table-component";
+import { customTableHeaderStyles } from "../_components/tableheaderstyle";
+import { TableRowEditDelete } from "../_components/table-row-edit-delete";
 
 export const PrivacyAndPolicyIndex = () => {
-  const { privacyAndTerms,privacyAndTermsIsLoading} = usePrivacyAndTerms();
+  const { privacyAndTerms, privacyAndTermsIsLoading ,deletePrivacyAndTerms,isDeletePrivacyAndTermsLoading} = usePrivacyAndTerms();
   // const [faq, setFaqs] = React.useState(null);
 
   // React.useEffect(() => {
@@ -17,6 +18,13 @@ export const PrivacyAndPolicyIndex = () => {
   //     .then(data => setFaqs(data))
   //     .catch(err => console.error("error", err));
   // }, [faq]);
+  const handleEdit = (id: TermsData[`_id`]) => {
+    console.log("id", id);
+  };
+  const handleDelete = (id: TermsData[`_id`]) => {
+    console.log("id", id);
+    deletePrivacyAndTerms(id)
+  };
   const columns = [
     {
       name: `Title`,
@@ -34,20 +42,24 @@ export const PrivacyAndPolicyIndex = () => {
     {
       name: `Operations`,
       selector: (row: TermsData) => (
-        <Typography variant="body2">{row._id}</Typography>
+        <TableRowEditDelete
+          onEdit={() => handleEdit(row._id)}
+          onDelete={() => handleDelete(row._id)}
+          isDisableDelete={isDeletePrivacyAndTermsLoading}
+        />
       ),
     },
   ];
-  console.log('loading ==>', privacyAndTermsIsLoading);
-  console.log('privacyAndTerms ===>', privacyAndTerms);
+  console.log("loading ==>", privacyAndTermsIsLoading);
+  console.log("privacyAndTerms ===>", privacyAndTerms);
 
   return (
-      <Box>
-        <Header
-          title="Privacy & Policy"
-          button={{ name: "Add new", onClick: () => null }}
-        />
-        <Paper variant="outlined" sx={{ pb: 0.5 }}>
+    <Box>
+      <Header
+        title="Privacy & Policy"
+        button={{ name: "Add new", onClick: () => null }}
+      />
+      <Paper variant="outlined" sx={{ pb: 0.5 }}>
         <DataTable
           columns={columns}
           data={privacyAndTerms?.data ? [privacyAndTerms?.data] : []}
@@ -65,6 +77,6 @@ export const PrivacyAndPolicyIndex = () => {
           customStyles={customTableHeaderStyles}
         />
       </Paper>
-      </Box>
-  )
-}
+    </Box>
+  );
+};
