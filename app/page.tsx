@@ -1,103 +1,192 @@
-import Image from "next/image";
+"use client";
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormLabel from "@mui/material/FormLabel";
+import FormControl from "@mui/material/FormControl";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import Stack from "@mui/material/Stack";
+import MuiCard from "@mui/material/Card";
+import { styled } from "@mui/material/styles";
+import { useAuth } from "@/hooks/use-auth";
+import { useRouter } from "next/navigation";
+import appSettings from "@/utils/app/settings";
 
-export default function Home() {
+const Card = styled(MuiCard)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  alignSelf: "center",
+  width: "100%",
+  padding: theme.spacing(4),
+  gap: theme.spacing(2),
+  margin: "auto",
+  [theme.breakpoints.up("sm")]: {
+    maxWidth: "450px",
+  },
+  boxShadow:
+    "hsla(220, 30%, 5%, 0.05) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.05) 0px 15px 35px -5px",
+  ...theme.applyStyles("dark", {
+    boxShadow:
+      "hsla(220, 30%, 5%, 0.5) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.08) 0px 15px 35px -5px",
+  }),
+}));
+
+const SignInContainer = styled(Stack)(({ theme }) => ({
+  height: "calc((1 - var(--template-frame-height, 0)) * 100dvh)",
+  minHeight: "100%",
+  padding: theme.spacing(2),
+  [theme.breakpoints.up("sm")]: {
+    padding: theme.spacing(4),
+  },
+  "&::before": {
+    content: '""',
+    display: "block",
+    position: "absolute",
+    zIndex: -1,
+    inset: 0,
+    backgroundImage:
+      "radial-gradient(ellipse at 50% 50%, hsl(210, 100%, 97%), hsl(0, 0%, 100%))",
+    backgroundRepeat: "no-repeat",
+    ...theme.applyStyles("dark", {
+      backgroundImage:
+        "radial-gradient(at 50% 50%, hsla(210, 100%, 16%, 0.5), hsl(220, 30%, 5%))",
+    }),
+  },
+}));
+
+export default function SignIn() {
+  const [emailError, setEmailError] = React.useState(false);
+  const [emailErrorMessage, setEmailErrorMessage] = React.useState("");
+  const [passwordError, setPasswordError] = React.useState(false);
+  const [passwordErrorMessage, setPasswordErrorMessage] = React.useState("");
+  const { push } = useRouter();
+  // const {faqs} = useFaqs();
+  const { isLoginLoading, logIn } = useAuth();
+
+  // console.log('use use faqs ===>', faqs)
+  const validateInputs = () => {
+    const email = document.getElementById("email") as HTMLInputElement;
+    const password = document.getElementById("password") as HTMLInputElement;
+
+    let isValid = true;
+
+    if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
+      setEmailError(true);
+      setEmailErrorMessage("Please enter a valid email address.");
+      isValid = false;
+    } else {
+      setEmailError(false);
+      setEmailErrorMessage("");
+    }
+
+    if (!password.value || password.value.length < 6) {
+      setPasswordError(true);
+      setPasswordErrorMessage("Password must be at least 6 characters long.");
+      isValid = false;
+    } else {
+      setPasswordError(false);
+      setPasswordErrorMessage("");
+    }
+    const emailValue = email.value;
+    const passwordValue = password.value;
+
+    logIn({ email: emailValue, password: passwordValue }, { onSuccess: (data) => { console.log('login data', data); appSettings.setAuthToken(data.accessToken); push("/dashboard/article"); } });
+    // fetch('https://mamun-reza-freeshops-backend.vercel.app/api/v1/admin/login', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({ email: emailValue, password: passwordValue }),
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) =>  {console.log("data ====>", data); push("/dashboard/article");})
+    //   .catch((err) => console.error("error", err));
+    // logIn()
+    return isValid;
+  };
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+    <SignInContainer
+      direction="column"
+      justifyContent="space-between"
+      className="overflow-y-auto h-full min-h-[100vh]"
+    >
+      {/* <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} /> */}
+      <Card variant="outlined">
+        {/* <SitemarkIcon /> */}
+        <Typography component="h3" variant="h5">
+          Login to Account
+        </Typography>
+        <Typography>
+          Please enter your email and password to continue
+        </Typography>
+        <Box
+          // component="form"
+          // onSubmit={handleSubmit}
+          // noValidate
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            width: "100%",
+            gap: 2,
+          }}
+        >
+          <FormControl>
+            <FormLabel htmlFor="email">Email</FormLabel>
+            <TextField
+              error={emailError}
+              helperText={emailErrorMessage}
+              id="email"
+              type="email"
+              name="email"
+              placeholder="your@email.com"
+              defaultValue={`admin@gmail.com`}
+              autoComplete="email"
+              autoFocus
+              required
+              fullWidth
+              size="small"
+              variant="outlined"
+              color={emailError ? "error" : "primary"}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          </FormControl>
+          <FormControl>
+            <FormLabel htmlFor="password">Password</FormLabel>
+            <TextField
+              error={passwordError}
+              helperText={passwordErrorMessage}
+              name="password"
+              placeholder="••••••"
+              type="password"
+              id="password"
+              defaultValue={`admin@1234`}
+              autoComplete="current-password"
+              autoFocus
+              size="small"
+              required
+              fullWidth
+              variant="outlined"
+              color={passwordError ? "error" : "primary"}
+            />
+          </FormControl>
+          <FormControlLabel
+            control={<Checkbox value="remember" color="primary" size="small" />}
+            label="Remember me"
+          />
+
+          <Button
+            type="submit"
+            fullWidth
+            size="small"
+            variant="contained"
+            onClick={validateInputs}
+            disabled={isLoginLoading}
           >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+            Sign in
+          </Button>
+        </Box>
+      </Card>
+    </SignInContainer>
   );
 }
