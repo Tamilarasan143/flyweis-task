@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "User Management",
 };
 
-export const UserManagementPage = () => {
+ const UserManagementPage = () => {
   return (
     <UserManagementIndex/>
   )

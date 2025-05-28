@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: "Privacy & Terms",
 };
 
-export const PrivacyAndPolicyPage = () => {
+const PrivacyAndPolicyPage = () => {
   return (
     <PrivacyAndPolicyIndex/>
   )

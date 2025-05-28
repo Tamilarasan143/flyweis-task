@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: "FAQ",
 };
 
-export const FaqPage = () => {
+const FaqPage = () => {
   return (
     <FaqIndex/>
   )
