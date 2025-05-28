@@ -26,6 +26,12 @@ export interface AutoDealershipEntry {
   title: string;
 }
 
+export interface PostAutoDealership{
+    title: string;
+      description: string;
+  everyThingHeading: string;
+  promotedPlacementHeading: string;
+}
 export interface AutoDealershipResponse {
   message: string;
   status: number;

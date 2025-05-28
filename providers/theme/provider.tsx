@@ -46,7 +46,9 @@ export default function AppThemeProvider({
             defaultProps: { color: `default` },
           },
           MuiFormLabel: {
+            
             styleOverrides: {
+             
               asterisk: { color: `red` },
             },
           },

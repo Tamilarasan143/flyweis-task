@@ -1,4 +1,5 @@
 import { Box, Button } from "@mui/material";
+import { red } from "@mui/material/colors";
 import React from "react";
 
 export const TableRowEditDelete: React.FC<{
@@ -14,7 +15,7 @@ export const TableRowEditDelete: React.FC<{
           size="small"
           variant="contained"
           onClick={onEdit}
-          color="primary"
+          sx={{color:(theme)=>theme.palette.primary.main,backgroundColor:(theme)=>theme.palette.primary.light}}
           disabled={isDisableEdit}
         >
           Edit
@@ -26,7 +27,7 @@ export const TableRowEditDelete: React.FC<{
           size="small"
           disabled={isDisableDelete}
           onClick={onDelete}
-          color="error"
+            sx={{color:(theme)=>theme.palette.error.main,backgroundColor:red[100]}}
         >
           Delete
         </Button>

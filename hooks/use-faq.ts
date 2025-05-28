@@ -13,6 +13,21 @@ export const useFaqs = () => {
     queryFn: async () => api.faq.getAllFaq(), // Specify the query function
     refetchOnMount: false,
   });
+    //POST
+  const { mutate: addFaq, status: postStatus } = useMutation({
+    mutationKey: ["faq"],
+    mutationFn: api.faq.postFaq,
+    onError: (err: ApiError, data) => {
+      console.error({
+        message: `Failed to Add Faq : ${data.question}`,
+        description: `${err.message}.Please try again later.`,
+      });
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["faq"] });
+    },
+  });
+  const isPostFaqLoading = postStatus === "pending";
    //DELETE
   const { mutate: deleteFAQ, status: deleteStatus } = useMutation({
     mutationKey: ["faq"],
@@ -33,6 +48,8 @@ export const useFaqs = () => {
     faqs,
     faqIsLoading,
      deleteFAQ,
-     isDeleteFAQLoading
+     isDeleteFAQLoading,
+     addFaq,
+     isPostFaqLoading
   };
 };

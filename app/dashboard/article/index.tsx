@@ -9,9 +9,19 @@ import Image from "next/image";
 import { customTableHeaderStyles } from "../_components/tableheaderstyle";
 import { ImagePlaceholder } from "../_components/image-placeholder";
 import { TableRowEditDelete } from "../_components/table-row-edit-delete";
+// import { AddArticleDialog } from "./add-article";
 
 export const ArticleIndex = () => {
-  const { articles, articlesIsLoading ,deleteArticle,isDeleteArticleLoading} = useArticle();
+  const { articles, articlesIsLoading, deleteArticle, isDeleteArticleLoading } = useArticle();
+  // const [open, setOpen] = React.useState(false);
+
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
+
   // const [article, setArticle] = React.useState(null);
 
   // React.useEffect(() => {
@@ -20,11 +30,11 @@ export const ArticleIndex = () => {
   //         .then(data => setArticle(data))
   //         .catch(err => console.error("error", err));
   // }, []);
-  const handleEdit = (id: Article[`_id`]) => {
-    console.log("id", id);
-  };
+  // const handleEdit = (id: Article[`_id`]) => {
+  //   console.log("id", id);
+  // };
   const handleDelete = (id: Article[`_id`]) => {
-    
+
     deleteArticle(id)
   };
   const columns = [
@@ -61,7 +71,7 @@ export const ArticleIndex = () => {
       name: `Operations`,
       selector: (row: Article) => (
         <TableRowEditDelete
-          onEdit={() => handleEdit(row._id)}
+          // onEdit={() => handleEdit(row._id)}
           isDisableDelete={isDeleteArticleLoading}
           onDelete={() => handleDelete(row._id)}
         />
@@ -74,7 +84,7 @@ export const ArticleIndex = () => {
     <Box>
       <Header
         title="Article"
-        button={{ name: "Add new article", onClick: () => null }}
+        // button={{ name: "Add new article", onClick: () => handleClickOpen() }}
       />
       <Paper variant="outlined" sx={{ pb: 0.5 }}>
         <DataTable
@@ -94,6 +104,7 @@ export const ArticleIndex = () => {
           customStyles={customTableHeaderStyles}
         />
       </Paper>
+      {/* {open && <AddArticleDialog open={open} handleClose={handleClose}/>} */}
     </Box>
   );
 };

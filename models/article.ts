@@ -22,6 +22,11 @@ export interface ArticleData {
   nextPage: number | null;
 }
 
+export interface PostArticle {
+  title: string;
+  description: string;
+  image:string
+}
 export interface ArticleResponse {
   status: number;
   message: string;

@@ -9,8 +9,17 @@ import { AutoDealershipEntry } from "@/models/auto-dealership";
 import DataTable from "react-data-table-component";
 import { ImagePlaceholder } from "../_components/image-placeholder";
 import { TableRowEditDelete } from "../_components/table-row-edit-delete";
+import { AddAutoDealershipDialog } from "./add-auto-dealership";
 export const AutoDealershipIndex = () => {
   const { autoDealerShips, autoDealerShipsIsLoading ,deleteAutoDealerShip,isDeleteAutoDealerShipLoading} = useAutoDealerShip();
+    const [open, setOpen] = React.useState(false);
+  
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+    const handleClose = () => {
+      setOpen(false);
+    };
   // const [article, setArticle] = React.useState(null);
 
   // React.useEffect(() => {
@@ -19,9 +28,9 @@ export const AutoDealershipIndex = () => {
   //         .then(data => setArticle(data))
   //         .catch(err => console.error("error", err));
   // }, []);
-  const handleEdit = (id: AutoDealershipEntry[`_id`]) => {
-    console.log("id", id);
-  };
+  // const handleEdit = (id: AutoDealershipEntry[`_id`]) => {
+  //   console.log("id", id);
+  // };
   const handleDelete = () => {
     
     deleteAutoDealerShip()
@@ -35,6 +44,7 @@ export const AutoDealershipIndex = () => {
     },
     {
       name: `Title`,
+      wrap: true,
       selector: (row: AutoDealershipEntry) => (
         <Typography variant="body2">{row.title}</Typography>
       ),
@@ -48,9 +58,10 @@ export const AutoDealershipIndex = () => {
     },
     {
       name: `Operations`,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       selector: (row: AutoDealershipEntry) => (
         <TableRowEditDelete
-          onEdit={() => handleEdit(row._id)}
+          // onEdit={() => handleEdit(row._id)}
           onDelete={() => handleDelete()}
           isDisableDelete={isDeleteAutoDealerShipLoading}
         />
@@ -63,7 +74,7 @@ export const AutoDealershipIndex = () => {
     <Box>
       <Header
         title="Auto dealership"
-        button={{ name: "Add auto dealership", onClick: () => null }}
+        button={{ name: "Add auto dealership", onClick: () => handleClickOpen() }}
       />
       <Paper variant="outlined" sx={{ pb: 0.5 }}>
         <DataTable
@@ -83,6 +94,7 @@ export const AutoDealershipIndex = () => {
           customStyles={customTableHeaderStyles}
         />
       </Paper>
+      {open && <AddAutoDealershipDialog open={open} handleClose={handleClose}/>}
     </Box>
   );
 };

@@ -12,3 +12,8 @@ export interface FAQResponse {
   message: string;
   data: FAQItem[];
 }
+
+export interface PostFAQ {
+    question: string;
+  answer: string;
+}

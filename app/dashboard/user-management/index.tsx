@@ -20,9 +20,9 @@ export const UserManagementIndex = () => {
   //     .then(data => setFaqs(data))
   //     .catch(err => console.error("error", err));
   // }, [faq]);
-  const handleEdit = (id: UserItem[`_id`]) => {
-    console.log("id", id);
-  };
+  // const handleEdit = (id: UserItem[`_id`]) => {
+  //   console.log("id", id);
+  // };
   const handleDelete = (id: UserItem[`_id`]) => {
     deleteUser(id)
   };
@@ -78,7 +78,7 @@ export const UserManagementIndex = () => {
       name: `Operations`,
       selector: (row: UserItem) => (
         <TableRowEditDelete
-          onEdit={() => handleEdit(row._id)}
+          // onEdit={() => handleEdit(row._id)}
           onDelete={() => handleDelete(row._id)}
           isDisableDelete={isDeleteUserLoading}
         />

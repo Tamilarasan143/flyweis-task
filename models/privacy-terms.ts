@@ -15,3 +15,8 @@ export interface TermsResponse {
   message: string;
   data: TermsData;
 }
+
+export interface PostTerms{
+    title: string;
+  description: string;
+}

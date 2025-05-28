@@ -13,6 +13,20 @@ export const usePrivacyAndTerms = () => {
     queryFn: async () => api.privacyAndTerms.getAllTerm(), // Specify the query function
     refetchOnMount: false,
   });
+    const { mutate: addPrivacyAndTerms, status: postStatus } = useMutation({
+    mutationKey: ["privacyAndTerms"],
+    mutationFn: api.privacyAndTerms.postTerm,
+    onError: (err: ApiError, data) => {
+      console.error({
+        message: `Failed to Add PrivacyAndTerms : ${data.title}`,
+        description: `${err.message}.Please try again later.`,
+      });
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["privacyAndTerms"] });
+    },
+  });
+  const isPostPrivacyAndTermsLoading = postStatus === "pending";
    //DELETE
   const { mutate: deletePrivacyAndTerms, status: deleteStatus } = useMutation({
     mutationKey: ["privacyAndTerms"],
@@ -33,6 +47,8 @@ export const usePrivacyAndTerms = () => {
     privacyAndTerms,
     privacyAndTermsIsLoading,
     deletePrivacyAndTerms,
-    isDeletePrivacyAndTermsLoading
+    isDeletePrivacyAndTermsLoading,
+    addPrivacyAndTerms,
+    isPostPrivacyAndTermsLoading
   };
 };

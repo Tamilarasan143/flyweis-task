@@ -7,9 +7,18 @@ import { FAQItem } from "@/models/faq";
 import DataTable from "react-data-table-component";
 import { customTableHeaderStyles } from "../_components/tableheaderstyle";
 import { TableRowEditDelete } from "../_components/table-row-edit-delete";
+import { AddFaqDialog } from "./add-faq";
 
 export const FaqIndex = () => {
   const { faqs, faqIsLoading , deleteFAQ , isDeleteFAQLoading } = useFaqs();
+    const [open, setOpen] = React.useState(false);
+  
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+    const handleClose = () => {
+      setOpen(false);
+    };
   // const [faq, setFaqs] = React.useState(null);
 
   // React.useEffect(() => {
@@ -18,9 +27,9 @@ export const FaqIndex = () => {
   //     .then(data => setFaqs(data))
   //     .catch(err => console.error("error", err));
   // }, [faq]);
-  const handleEdit = (id: FAQItem[`_id`]) => {
-    console.log("id", id);
-  };
+  // const handleEdit = (id: FAQItem[`_id`]) => {
+  //   console.log("id", id);
+  // };
   const handleDelete = (id: FAQItem[`_id`]) => {
     deleteFAQ(id)
   };
@@ -42,7 +51,7 @@ export const FaqIndex = () => {
       name: `Operations`,
       selector: (row: FAQItem) => (
         <TableRowEditDelete
-          onEdit={() => handleEdit(row._id)}
+          // onEdit={() => handleEdit(row._id)}
           onDelete={() => handleDelete(row._id)}
           isDisableEdit={isDeleteFAQLoading}
         />
@@ -55,7 +64,7 @@ export const FaqIndex = () => {
     <Box>
       <Header
         title="FAQ's"
-        button={{ name: "Add new FAQ", onClick: () => null }}
+        button={{ name: "Add new FAQ", onClick: () => handleClickOpen() }}
       />
       <Paper variant="outlined" sx={{ pb: 0.5 }}>
         <DataTable
@@ -75,6 +84,7 @@ export const FaqIndex = () => {
           customStyles={customTableHeaderStyles}
         />
       </Paper>
+      {open && <AddFaqDialog open={open} handleClose={handleClose}/>}
     </Box>
   );
 };
