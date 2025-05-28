@@ -1,11 +1,16 @@
-"use client"
-import { Box } from '@mui/material';
-import React from 'react'
-import { Header } from '../_components/header';
-import { useUserManagement } from '@/hooks/use-user-management';
+"use client";
+import { Box, Paper, Typography } from "@mui/material";
+import React from "react";
+import { Header } from "../_components/header";
+import { useUserManagement } from "@/hooks/use-user-management";
+import { UserItem } from "@/models/user-management";
+import Image from "next/image";
+import { customTableHeaderStyles } from "../_components/tableheaderstyle";
+import { ImagePlaceholder } from "../_components/image-placeholder";
+import DataTable from "react-data-table-component";
 
 export const UserManagementIndex = () => {
-  const { userManagements , userManagementsIsLoading } = useUserManagement();
+  const { userManagements, userManagementsIsLoading } = useUserManagement();
   // const [faq, setFaqs] = React.useState(null);
 
   // React.useEffect(() => {
@@ -14,16 +19,82 @@ export const UserManagementIndex = () => {
   //     .then(data => setFaqs(data))
   //     .catch(err => console.error("error", err));
   // }, [faq]);
-
-    console.log('loading ==>', userManagementsIsLoading);
-  console.log('userManagements ===>', userManagements)
+  const columns = [
+    {
+      name: `Image`,
+      selector: (row: UserItem) =>
+        row.image ? (
+          <Image
+            // src={URL.createObjectURL(file)}
+            src={row.image}
+            alt={row.fullName}
+            width={40}
+            height={40}
+            className="h-10 w-10 rounded border object-cover"
+          />
+        ) : (
+          <ImagePlaceholder />
+        ),
+    },
+    {
+      name: `Name`,
+      selector: (row: UserItem) => (
+        <Typography variant="body2">
+          { row.fullName ?? (row.firstName + " " + row.lastName)}
+        </Typography>
+      ),
+    },
+    {
+      name: `Status`,
+      wrap: true,
+      selector: (row: UserItem) => (
+        <Typography variant="body2">{row.status}</Typography>
+      ),
+    },
+    {
+      name: `Login`,
+      wrap: true,
+      selector: (row: UserItem) => (
+        <Typography variant="body2">{row.updatedAt}</Typography>
+      ),
+    },
+    {
+      name: `Location`,
+      wrap: true,
+      selector: (row: UserItem) => (
+        <Typography variant="body2">{row.state ?? row.country ?? row.location}</Typography>
+      ),
+    },
+    {
+      name: `Operations`,
+      selector: (row: UserItem) => (
+        <Typography variant="body2">{row._id}</Typography>
+      ),
+    },
+  ];
+  console.log("loading ==>", userManagementsIsLoading);
+  console.log("userManagements ===>", userManagements);
   return (
-      <Box>
-        <Header
-          title="User Management"
-        
+    <Box>
+      <Header title="User Management" />
+       <Paper variant="outlined" sx={{ pb: 0.5 }}>
+        <DataTable
+          columns={columns}
+          data={userManagements?.data.docs ?? []}
+          progressPending={userManagementsIsLoading}
+          selectableRows
+          // pagination
+          responsive
+          highlightOnHover
+          pointerOnHover
+          // paginationServer
+          // paginationTotalRows={totalRows}
+          // onChangeRowsPerPage={onChangeRowsPerPage}
+          // onChangePage={onChangePage}
+          // onRowClicked={handleRowClick}
+          customStyles={customTableHeaderStyles}
         />
-        <div>User Management body</div>
-      </Box>
-  )
-}
+      </Paper>
+    </Box>
+  );
+};

@@ -7,7 +7,7 @@ export const Header: React.FC<{
   button?: { name: string; onClick: () => void };
 }> = ({ title, button }) => {
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex" , mb:3}}>
       <Typography component={`h3`} variant="h5">
         {title}
       </Typography>
