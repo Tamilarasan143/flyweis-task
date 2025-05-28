@@ -1,11 +1,11 @@
 "use client"
-import { useFaqs } from '@/hooks/use-faq'
 import { Box } from '@mui/material';
 import React from 'react'
 import { Header } from '../_components/header';
+import { useUserManagement } from '@/hooks/use-user-management';
 
-export const FaqIndex = () => {
-  const { faqs , faqIsLoading} = useFaqs();
+export const UserManagementIndex = () => {
+  const { userManagements , userManagementsIsLoading } = useUserManagement();
   // const [faq, setFaqs] = React.useState(null);
 
   // React.useEffect(() => {
@@ -15,15 +15,15 @@ export const FaqIndex = () => {
   //     .catch(err => console.error("error", err));
   // }, [faq]);
 
-    console.log('loading ==>', faqIsLoading);
-  console.log('faqs ===>', faqs)
+    console.log('loading ==>', userManagementsIsLoading);
+  console.log('userManagements ===>', userManagements)
   return (
       <Box>
         <Header
-          title="FAQ's"
-          button={{ name: "Add new FAQ", onClick: () => null }}
+          title="User Management"
+        
         />
-        <div>FAQ{"'"}s body</div>
+        <div>User Management body</div>
       </Box>
   )
 }

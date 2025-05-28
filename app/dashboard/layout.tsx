@@ -18,6 +18,8 @@ import { FaQuestion } from "react-icons/fa";
 import { usePathname, } from "next/navigation";
 import Link from "next/link";
 import ResponsiveAppBar from "@/components/appbar";
+import { LuNotebookPen } from "react-icons/lu";
+import { TbUserEdit } from "react-icons/tb";
 const drawerWidth = 240;
 const menuItems = [
   {
@@ -38,8 +40,22 @@ const menuItems = [
     id: "faq",
     label: "Faqs",
     href: `/dashboard/faq`,
-    icon: <FaQuestion color="black"/>,
+    icon: <FaQuestion color="black" />,
     filledIcon: <FaQuestion color="white" />,
+  },
+  {
+    id: "privacy & terms",
+    label: "Privacy & Terms",
+    href: `/dashboard/privacy-terms`,
+    icon: <LuNotebookPen color="black" />,
+    filledIcon: <LuNotebookPen color="white" />,
+  },
+  {
+    id: "user management",
+    label: "User Management",
+    href: `/dashboard/user-management`,
+    icon: <TbUserEdit color="black" />,
+    filledIcon: <TbUserEdit color="white" />,
   },
 ];
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
@@ -49,8 +65,8 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <ResponsiveAppBar sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}/>
-    
+      <ResponsiveAppBar sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }} />
+
       <Drawer
         sx={{
           width: drawerWidth,
@@ -76,15 +92,16 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                   backgroundColor: isActive
                     ? (theme) => theme.palette.primary.main
                     : "",
+                  borderRadius: 1
                 }}
               >
                 <Link
                   href={text.href}
                   className="w-full rounded-lg"
                   passHref
-                
+
                 >
-                  <ListItemButton>
+                  <ListItemButton >
                     <ListItemIcon>
                       {isActive ? text.filledIcon : text.icon}
                     </ListItemIcon>

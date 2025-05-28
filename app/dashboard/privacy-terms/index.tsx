@@ -1,11 +1,11 @@
 "use client"
-import { useFaqs } from '@/hooks/use-faq'
 import { Box } from '@mui/material';
 import React from 'react'
 import { Header } from '../_components/header';
+import { usePrivacyAndTerms } from '@/hooks/use-privacy-terms';
 
-export const FaqIndex = () => {
-  const { faqs , faqIsLoading} = useFaqs();
+export const PrivacyAndPolicyIndex = () => {
+  const { privacyAndTerms,privacyAndTermsIsLoading} = usePrivacyAndTerms();
   // const [faq, setFaqs] = React.useState(null);
 
   // React.useEffect(() => {
@@ -15,15 +15,15 @@ export const FaqIndex = () => {
   //     .catch(err => console.error("error", err));
   // }, [faq]);
 
-    console.log('loading ==>', faqIsLoading);
-  console.log('faqs ===>', faqs)
+    console.log('loading ==>', privacyAndTermsIsLoading);
+  console.log('privacyAndTerms ===>', privacyAndTerms)
   return (
       <Box>
         <Header
-          title="FAQ's"
-          button={{ name: "Add new FAQ", onClick: () => null }}
+          title="Privacy & Policy"
+          button={{ name: "Add new", onClick: () => null }}
         />
-        <div>FAQ{"'"}s body</div>
+        <div>PrivacyAndPolicy body</div>
       </Box>
   )
 }
