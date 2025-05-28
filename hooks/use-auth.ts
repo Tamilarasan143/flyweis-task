@@ -1,16 +1,11 @@
 "use client";
 import { api } from "@/axios-api";
 import { ApiError } from "@/models/api-error";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useAuth = () => {
   const queryClient = useQueryClient();
-  //GET
-  const { data: profile, isLoading: profileIsLoading } = useQuery({
-    queryKey: ["auth"], // Pass queryKey within an object
-    queryFn: async () => api.auth.getProfile(), // Specify the query function
-    refetchOnMount: false,
-  });
+
 
   //POST
   const { mutate: logIn, status: postStatus } = useMutation({
@@ -26,8 +21,7 @@ export const useAuth = () => {
   const isLoginLoading = postStatus === "pending";
 
   return {
-    profile,
-    profileIsLoading,
+
     logIn,
     isLoginLoading,
   };

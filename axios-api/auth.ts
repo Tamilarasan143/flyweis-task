@@ -3,7 +3,8 @@ import apiClient from './apiClient';
 
 export const authRoutes = {
     getProfile: async () => {
-        return await apiClient.get(`/api/v1/admin/getProfile`);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        return await apiClient.get<{message:string,data:any}>(`/api/v1/admin/getProfile`);
     },
     logIn: async (body: { email: string, password: string }) => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
