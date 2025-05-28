@@ -38,28 +38,28 @@ export const AutoDealershipIndex = () => {
   const columns = [
     {
       name: `Image`,
-      selector: (row: AutoDealershipEntry) => (
+      cell: (row: AutoDealershipEntry) => (
         <ImagePlaceholder key={row._id} />
       ),
     },
     {
       name: `Title`,
       wrap: true,
-      selector: (row: AutoDealershipEntry) => (
+      cell: (row: AutoDealershipEntry) => (
         <Typography variant="body2">{row.title}</Typography>
       ),
     },
     {
       name: `Description`,
       wrap: true,
-      selector: (row: AutoDealershipEntry) => (
+      cell: (row: AutoDealershipEntry) => (
         <Typography variant="body2">{row.description}</Typography>
       ),
     },
     {
       name: `Operations`,
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      selector: (row: AutoDealershipEntry) => (
+      cell: (row: AutoDealershipEntry) => (
         <TableRowEditDelete
           // onEdit={() => handleEdit(row._id)}
           onDelete={() => handleDelete()}

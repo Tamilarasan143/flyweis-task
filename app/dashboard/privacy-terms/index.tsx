@@ -38,20 +38,20 @@ export const PrivacyAndPolicyIndex = () => {
     {
       name: `Title`,
       wrap: true,
-      selector: (row: TermsData) => (
+     cell: (row: TermsData) => (
         <Typography variant="body2">{row.title}</Typography>
       ),
     },
     {
       name: `Description`,
       wrap: true,
-      selector: (row: TermsData) => (
+      cell: (row: TermsData) => (
         <Typography variant="body2">{row.description}</Typography>
       ),
     },
     {
       name: `Operations`,
-      selector: (row: TermsData) => (
+      cell: (row: TermsData) => (
         <TableRowEditDelete
           // onEdit={() => handleEdit(row._id)}
           onDelete={() => handleDelete(row._id)}

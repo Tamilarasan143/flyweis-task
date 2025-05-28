@@ -29,7 +29,7 @@ export const UserManagementIndex = () => {
   const columns = [
     {
       name: `Image`,
-      selector: (row: UserItem) =>
+      cell: (row: UserItem) =>
         row.image ? (
           <Image
             // src={URL.createObjectURL(file)}
@@ -45,7 +45,7 @@ export const UserManagementIndex = () => {
     },
     {
       name: `Name`,
-      selector: (row: UserItem) => (
+     cell: (row: UserItem) => (
         <Typography variant="body2">
           {row.fullName ?? row.firstName + " " + row.lastName}
         </Typography>
@@ -54,21 +54,21 @@ export const UserManagementIndex = () => {
     {
       name: `Status`,
       wrap: true,
-      selector: (row: UserItem) => (
+      cell: (row: UserItem) => (
         <Typography variant="body2">{row.status}</Typography>
       ),
     },
     {
       name: `Login`,
       wrap: true,
-      selector: (row: UserItem) => (
+      cell: (row: UserItem) => (
         <Typography variant="body2">{row.updatedAt}</Typography>
       ),
     },
     {
       name: `Location`,
       wrap: true,
-      selector: (row: UserItem) => (
+      cell: (row: UserItem) => (
         <Typography variant="body2">
           {row.state ?? row.country ?? row.location}
         </Typography>
@@ -76,7 +76,7 @@ export const UserManagementIndex = () => {
     },
     {
       name: `Operations`,
-      selector: (row: UserItem) => (
+      cell: (row: UserItem) => (
         <TableRowEditDelete
           // onEdit={() => handleEdit(row._id)}
           onDelete={() => handleDelete(row._id)}

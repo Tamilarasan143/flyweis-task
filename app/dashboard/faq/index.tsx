@@ -36,20 +36,20 @@ export const FaqIndex = () => {
   const columns = [
     {
       name: `Question`,
-      selector: (row: FAQItem) => (
+      cell: (row: FAQItem) => (
         <Typography variant="body2">{row.question}</Typography>
       ),
     },
     {
       name: `Answer`,
       wrap: true,
-      selector: (row: FAQItem) => (
+      cell: (row: FAQItem) => (
         <Typography variant="body2">{row.answer}</Typography>
       ),
     },
     {
       name: `Operations`,
-      selector: (row: FAQItem) => (
+      cell: (row: FAQItem) => (
         <TableRowEditDelete
           // onEdit={() => handleEdit(row._id)}
           onDelete={() => handleDelete(row._id)}

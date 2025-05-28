@@ -82,7 +82,7 @@ bash
 Copy
 Edit
 # Clone the repository
-git clone https://github.com/yourusername/admin-panel-flyweis.git
+git clone https://github.com/Tamilarasan143/flyweis-task.git
 cd admin-panel-flyweis
 
 # Install dependencies

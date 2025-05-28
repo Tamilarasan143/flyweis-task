@@ -40,7 +40,7 @@ export const ArticleIndex = () => {
   const columns = [
     {
       name: `Image`,
-      selector: (row: Article) =>
+      cell: (row: Article) =>
         row.image ? (
           <Image
             // src={URL.createObjectURL(file)}
@@ -56,20 +56,20 @@ export const ArticleIndex = () => {
     },
     {
       name: `Title`,
-      selector: (row: Article) => (
+      cell: (row: Article) => (
         <Typography variant="body2">{row.title}</Typography>
       ),
     },
     {
       name: `Description`,
       wrap: true,
-      selector: (row: Article) => (
+      cell: (row: Article) => (
         <Typography variant="body2">{row.description}</Typography>
       ),
     },
     {
       name: `Operations`,
-      selector: (row: Article) => (
+      cell: (row: Article) => (
         <TableRowEditDelete
           // onEdit={() => handleEdit(row._id)}
           isDisableDelete={isDeleteArticleLoading}
