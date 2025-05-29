@@ -2,7 +2,7 @@
 This project is an Admin Panel built as part of a technical task for Flyweis Technology. It is developed using modern web technologies including Next.js 15, React 19, TanStack Query, Material UI 7, and TypeScript. The application includes five core admin screens with full API integration and SEO optimization.
 
 🧑‍💻 Developed By
-Your Name Here
+Tamilarasan Elumalai
 
 🛠️ Tech Stack
 Next.js 15 – App router, server/client rendering
